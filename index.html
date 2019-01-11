@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>8King</title>
+	<!-- libs -->
+    <script src="libs/phaser.min.js"></script>
+    <script src="libs/CanvasInput.min.js"></script>
+	<script src="libs/jquery-1.11.1.min.js"></script>
+
+    <!-- myCode -->
+    <script src="js/Tools.js"></script>
+    <script src="js/Boot.js"></script>
+    <script src="js/Preloader.js"></script>
+    <script src="js/MainMenu.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/PlaylantFramework.js"></script>
+    <script src="js/Options.js"></script>
+    <script src="js/Login.js"></script>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			background-color: #ffffff;
+		}
+
+        .accelerated {
+          -webkit-transform: translateZ(0);
+          -moz-transform: translateZ(0);
+          -ms-transform: translateZ(0);
+          -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+          -moz-transition: all 1s;
+          -webkit-transition: all 1s;
+          -o-transition: all 1s;
+          transition: all 1s ;
+        }
+
+	</style>
+</head>
+<body>
+    <div id="gameContainer" class="accelerated"></div>
+    <script type="text/javascript">
+    	var game;
+        window.onload = function() {
+            var height = 740;
+            var width =  640;
+
+            game = new Phaser.Game(width, height, Phaser.CANVAS, 'gameContainer');
+            
+            //resizeGame();
+
+             game.SoundManager = {
+                    sfx: {},
+                    music: {},
+                    musicMuted: false,
+                    sfxMuted: false,
+                    playSfx: function(key){
+                        this.sfx[key].play();
+                    },
+                    playMusic: function(key, loop){
+                        this.music[key].loop = loop;
+                        this.music[key].play();
+                    },
+                    addSfx: function(sound){
+                        this.sfx[sound.name] = sound;
+                    },
+                    addMusic: function(music){
+                        this.music[music.name] = music;
+                    },
+                    toggleSfxMuted: function(){
+                        var s;
+                        for (s in this.sfx) {
+                            this.sfx[s].volume = this.sfx[s].volume == 0 ? 1 : 0;
+                        };
+                        this.sfxMuted = this.sfx[s].volume == 0;
+                        return this.sfxMuted;
+                    },
+                    toggleMusicMuted: function(){
+                        var m;
+                        for (m in this.music) {
+                            this.music[m].mute = !this.music[m].mute;
+                        };
+                        this.musicMuted = this.music[m].mute;
+                        return this.musicMuted;
+                    }
+                };
+                game.sfx = {};
+
+
+            game.state.add('Boot',BasicGame.Boot);
+            game.state.add('Preloader',BasicGame.Preloader);
+            game.state.add('Login',BasicGame.Login);
+            game.state.add('MainMenu',BasicGame.MainMenu);
+            game.state.add('Game',BasicGame.Game);
+            game.state.add('Options',BasicGame.Options);
+
+
+            game.state.start('Boot');
+
+
+        }
+
+    </script>
+</body>
+</html>

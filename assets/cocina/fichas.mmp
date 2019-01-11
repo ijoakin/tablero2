@@ -1,0 +1,10 @@
+Created with MapMaker
+Date 05/05/2006
+
+XPos = 71
+YPos = 72
+MaxHeight = 71
+SpriteCount = 15
+PicWidth = 1001
+Picture = fichas.bmp
+Module = fichas.bas
